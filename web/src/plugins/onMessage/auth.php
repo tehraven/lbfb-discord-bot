@@ -81,7 +81,7 @@ class auth
         
 
         if (in_array($channelID, $this->excludeChannel, true)) {
-            $logger->addInfo("Received from channel " . $channelID . ", which is disabled.");
+            $logger->this->logger("Received from channel " . $channelID . ", which is disabled.");
             return null;
         }
 
@@ -258,7 +258,7 @@ class auth
             return null;
         }
         
-        $logger->addInfo("No trigger data! ".print_r($data, true));
+        $this->logger->addInfo("No trigger data! ".print_r($data, true));
         
         return null;
     }
