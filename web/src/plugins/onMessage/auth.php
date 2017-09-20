@@ -78,8 +78,10 @@ class auth
     public function onMessage($msgData, $message)
     {
         $channelID = (int) $msgData['message']['channelID'];
+        
 
         if (in_array($channelID, $this->excludeChannel, true)) {
+            $logger->addInfo("Received from channel " . $channelID . ", which is disabled.");
             return null;
         }
 
@@ -129,12 +131,12 @@ class auth
                 }
 
                 //Add corp ticker to name
-                if ($this->corpTickers === 'true') {
+                if ($this->corpTickers == 'true') {
                     $setTicker = 1;
                 }
 
                 //Set eve name if nameCheck is true
-                if ($this->nameEnforce === 'true') {
+                if ($this->nameEnforce == 'true') {
                     $nameEnforce = 1;
                 }
                 $role = null;
@@ -255,6 +257,9 @@ class auth
             $this->logger->addInfo('Auth: User was denied due to the code being invalid ' . $userName);
             return null;
         }
+        
+        $logger->addInfo("No trigger data! ".print_r($data, true));
+        
         return null;
     }
 

@@ -32,7 +32,7 @@ $config['bot'] = array(
     'guild' => 99005874, // guildID
     'token' => 'MzYwMTIyODIzMjQwNTgxMTMx.DKRWXA.b-C_IyckLwO0DpAIceKGLYF945s', //enter the token for your app (https://discordapp.com/developers/applications/me)
     'adminRoles' => array('Leadership'), //enter the roles that you'd like to have access to admin commands
-    'restrictedChannels' => array(0, 0), //bot will not respond in these channels
+    'restrictedChannels' => [], //bot will not respond in these channels
     'silentMode' => 'false' //set this to true if you want to disable all the chat commands
 );
 
@@ -74,13 +74,13 @@ $config['eve'] = array(
 $config['enabledPlugins'] = array( // remove the slashes for the plugins you want
     'about', //info on the bot
     'auth', //sso based auth system
-    'authCheck', // checks if users have left corp or alliance
-    //'charInfo', // eve character info using eve-kill
-    //'sysInfo', // eve system information
-    //'corpInfo', // eve corp info
-    //'eveStatus', // tq status message command
+    //'authCheck', // checks if users have left corp or alliance
+    'charInfo', // eve character info using eve-kill
+    'sysInfo', // eve system information
+    'corpInfo', // eve corp info
+    'eveStatus', // tq status message command
     //'periodicStatusCheck', // ....YOU MUST SET A CHANNEL IN THE NOTIFICATIONS SECTION NEAR THE BOTTOM OF THIS FILE.... Bot routinely checks if TQ status changes (reports server downtimes to the notifications channel)
-    //'help', // bot help program, will list active addons
+    'help', // bot help program, will list active addons
     'price', // price check tool, works for all items and ships. Can either !pc <itemname> for general, or !<systemname> <item> for more specific
     'time', // global clock with eve time
     //'motd', // shows the MOTD of a listed channel.
@@ -153,10 +153,10 @@ $config['plugins'] = array(
     //SSO Auth
     'auth' => array(
         'url' => 'https://discord.fuelblocks.space/', // put a url here if using sso auth for ur sso page.
-        'exempt' => array('Leadership', ''), // role names that are exempt from auth checks (wont be removed by the bot)
+        'exempt' => [], // role names that are exempt from auth checks (wont be removed by the bot)
         'alertChannel' => 360126231070375936, // if using periodic check put the channel you'd like the bot to log removing users in. (Recommended you don't use an active chat channel)
         'corpTickers' => 'true', // if "true" bot will automatically add corp tickers to the front of users names at auth.
-        'nameEnforce' => 'true', // if "true" bot will automatically rename users to match their ingame name, can be used in conjunction with corpTickers.
+        'nameEnforce' => true, // if "true" bot will automatically rename users to match their ingame name, can be used in conjunction with corpTickers.
         'authGroups' => array(
             'group1' => array(
                 'corpID' => 0, // If you'd like to auth based on CORP put the corp ID here otherwise leave it as 0
