@@ -1,0 +1,3 @@
+#!/usr/bin/execlineb -S0
+
+exec php /var/www/Dramiel.php
