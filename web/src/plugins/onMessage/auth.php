@@ -237,6 +237,16 @@ class auth
                     }
                 }
                 if (null !== $role) {
+                    
+                    if(isset($corpTicker) || isset($corpName)) {
+                        foreach($roles as $role) {
+                            if((string)$role->name === (string)$corpTicker)
+                                $member->addRole($role);
+                            if((string)$role->name === (string)$corpName)
+                                $member->addRole($role);
+                        }
+                    }
+                    
                     $guild->members->save($member);
                     insertUser($this->db, $this->dbUser, $this->dbPass, $this->dbName, $userID, $charID, $eveName, $role);
                     disableReg($this->db, $this->dbUser, $this->dbPass, $this->dbName, $code);
