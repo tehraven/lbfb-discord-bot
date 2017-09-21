@@ -153,7 +153,9 @@ $config['plugins'] = array(
     //SSO Auth
     'auth' => array(
         'url' => 'https://discord.fuelblocks.space/', // put a url here if using sso auth for ur sso page.
-        'exempt' => [], // role names that are exempt from auth checks (wont be removed by the bot)
+        'exempt' => [
+            'Alliance Leader', 'Leadership', 'Fleet Commander', 'middle management', 'LBFB corp SEO', 'Quartermaster', 'Logistics'
+        ], // role names that are exempt from auth checks (wont be removed by the bot)
         'alertChannel' => 0, // if using periodic check put the channel you'd like the bot to log removing users in. (Recommended you don't use an active chat channel)
         'corpTickers' => 'true', // if "true" bot will automatically add corp tickers to the front of users names at auth.
         'nameEnforce' => 'true', // if "true" bot will automatically rename users to match their ingame name, can be used in conjunction with corpTickers.

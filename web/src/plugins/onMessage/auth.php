@@ -98,15 +98,12 @@ class auth
                 $this->message->reply('**Failure:** Please update the bots config to the latest version.');
                 return null;
             }
-
+            
             $code = $data['messageString'];
-
             if (strlen($code) < 12) {
                 $this->message->reply('Invalid Code, check ' . $this->config['bot']['trigger'] . 'help auth for more info.');
                 return null;
             }
-            
-            $this->message->reply("One Moment...");
             
             $result = selectPending($this->db, $this->dbUser, $this->dbPass, $this->dbName, $code);
 
@@ -122,7 +119,7 @@ class auth
                     //$this->logger->addInfo("Unknown corp in cache, querying ESI");
                     $corpDetails = corpDetails($corpID);
                     if (null === $corpDetails) { // Make sure it's always set.
-                        $this->message->reply('**Failure:** Unable to auth at this time, ESI is down. Please try again later.');
+                        $this->message->reply('**Failure:** Unable to retrieve information from EVE API. CCPlz.');
                         return null;
                     }
                     $corpTicker = $corpDetails['ticker'];
@@ -151,12 +148,12 @@ class auth
                 try { $member = $guild->members->get('id', $userID); } catch (\Exception $e) {}
                 
                 if (null === $member) {
-                    $this->message->reply("**Failure:** You're not a member of the correct guild.");
+                    $this->message->reply("**Failure:** You're not a member of this server. Dafuq? How are you even here?");
                     return null;
                 }
                 $eveName = characterName($charID);
                 if (null === $eveName) {
-                    $this->message->reply('**Failure:** Unable to auth at this time, ESI is down. Please try again later.');
+                    $this->message->reply('**Failure:** Unable to retrieve information from EVE API. CCPlz.');
                     return null;
                 }
                 
@@ -240,9 +237,9 @@ class auth
                     
                     if(isset($corpTicker) || isset($corpName)) {
                         foreach($roles as $role) {
-                            if((string)$role->name === (string)$corpTicker)
+                            if((string)$role->name == (string)$corpTicker)
                                 $member->addRole($role);
-                            if((string)$role->name === (string)$corpName)
+                            if((string)$role->name == (string)$corpName)
                                 $member->addRole($role);
                         }
                     }
@@ -262,17 +259,17 @@ class auth
                             $nick = "[{$corpTicker}] {$userName}";
                         }
                     }
-                    $this->message->reply(":white_check_mark: **Success:** {$nick} has been successfully authed.");
+                    $this->message->reply(":ISO_Spy: {$nick} has been successfully authenticated");
                     if (null !== $nick) {
                         queueRename($userID, $nick, $this->guild);
                     }
                     return null;
                 }
-                $this->message->reply('**Failure:** There are no roles available for your corp/alliance.');
+                $this->message->reply(':isoreee: There are no roles available for your corp/alliance. Please REEEE harder.');
                 $this->logger->addInfo('Auth: User was denied due to not being in the correct corp or alliance ' . $eveName);
                 return null;
             }
-            $this->message->reply('**Failure:** There was an issue with your code.');
+            $this->message->reply(':isofacepalm: There was an issue with your code.');
             $this->logger->addInfo('Auth: User was denied due to the code being invalid ' . $userName);
             return null;
         }
@@ -290,7 +287,7 @@ class auth
         return array(
             'name' => 'auth',
             'trigger' => $this->triggers,
-            'information' => 'SSO based auth system. ' . $this->ssoUrl . ' Visit the link and login with your main EVE account, select the correct character, and put the !auth <string> you receive in chat.'
+            'information' => 'Auth system for Discord. Go to ' . $this->ssoUrl . ' to get sorted.'
         );
     }
 }
