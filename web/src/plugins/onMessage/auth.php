@@ -190,7 +190,6 @@ class auth
                         //Check if allianceID matches
                         if ($allianceID == $authGroup['allianceID'] && $authGroup['allianceID'] != 0) {
                             foreach ($roles as $role) {
-                                $this->logger->addInfo(print_r($role, true));
                                 if ((string) $role->name == (string) $authGroup['allyMemberRole']) {
                                     $member->addRole($role);
                                     $role = 'ally';
