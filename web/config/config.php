@@ -74,7 +74,7 @@ $config['eve'] = array(
 $config['enabledPlugins'] = array( // remove the slashes for the plugins you want
     'about', //info on the bot
     'auth', //sso based auth system
-    //'authCheck', // checks if users have left corp or alliance
+   'authCheck', // checks if users have left corp or alliance
     'charInfo', // eve character info using eve-kill
     'sysInfo', // eve system information
     'corpInfo', // eve corp info
@@ -131,7 +131,7 @@ $config['plugins'] = array(
         ),
     ),
     //Pull MOTD of channel
-        'motd' => array(
+    'motd' => array(
         'keyID' => '', //char api keyID (Must have channel on api and mod rights on the char)
         'vCode' => '', //char api vCode
         'characterID' =>'', //ID Of the character with mod rights to the channel, can get this from zkill, look up your char and its /character/#### is your char ID
