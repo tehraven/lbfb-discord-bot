@@ -109,6 +109,7 @@ class auth
             $result = selectPending($this->db, $this->dbUser, $this->dbPass, $this->dbName, $code);
 
             $this->logger->addInfo("Searching for auth code '" . $code. "...");
+            $this->message->reply("One Moment...");
             while ($rows = $result->fetch_assoc()) {
                 $this->logger->addInfo("Found: ".print_r($rows, true));
                 $charID = (int) $rows['characterID'];
@@ -146,8 +147,14 @@ class auth
                 $role = null;
 
                 $roles = $member = null;
-                try { $roles = @$guild->roles; } catch(Exception $e) {}
-                try { $member = @$guild->members->get('id', $userID); } catch(Exception $e) {}
+                
+                $this->logger->addInfo("Getting roles and members...");
+                
+                $roles = $guild->roles;
+                $member = $guild->members->get('id', $userID);
+                
+                $this->logger->addInfo("Done getting roles and members");
+                
                 if (null === $member) {
                     $this->message->reply("**Failure:** You're not a member of the correct guild.");
                     return null;
@@ -159,7 +166,7 @@ class auth
                 }
                 
                 
-                $this->logger->addInfo("Possible roles: " . implode(", ", $roles));
+                $this->logger->addInfo("Role = ".$role);
                 
                 foreach ($this->authGroups as $authGroup) {
                     //Check if it's set to match corp and alliance
