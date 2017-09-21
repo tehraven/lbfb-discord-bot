@@ -29,7 +29,7 @@ $config['bot'] = array(
     'name' => 'REEEE Bot', // Discord name for your bot (Not yet implemented)
     'game' => 'EVE Online', // Shows the bot "playing" this
     'trigger' => '!', // what trigger is used for commands
-    'guild' => 360126231066181632, // guildID
+    'guild' => 280799069977444352, // guildID
     'token' => 'MzYwMTIyODIzMjQwNTgxMTMx.DKRWXA.b-C_IyckLwO0DpAIceKGLYF945s', //enter the token for your app (https://discordapp.com/developers/applications/me)
     'adminRoles' => array('Leadership'), //enter the roles that you'd like to have access to admin commands
     'restrictedChannels' => [], //bot will not respond in these channels
@@ -160,16 +160,118 @@ $config['plugins'] = array(
         'corpTickers' => 'true', // if "true" bot will automatically add corp tickers to the front of users names at auth.
         'nameEnforce' => 'true', // if "true" bot will automatically rename users to match their ingame name, can be used in conjunction with corpTickers.
         'authGroups' => array(
-            'group1' => array(
+            'alliance' => array(
                 'corpID' => 0, // If you'd like to auth based on CORP put the corp ID here otherwise leave it as 0
                 'allianceID' => 99005874, // If you'd like to auth based on ALLIANCE put the alliance ID here otherwise leave it as 0 (Can be used in conjunction with corp)
                 'corpMemberRole' => '', // The name of the role your CORP members will be assigned too if the auth plugin is active.
                 'allyMemberRole' => 'Memefleet', // The name of the role your ALLIANCE members will be assigned too if the auth plugin is active.
             ),
-            'group2' => array(
-                'corpID' => 0, // If you'd like to auth based on CORP put the corp ID here otherwise leave it as 0
+            'WCM' => array(
+                'corpID' => 98141672, // If you'd like to auth based on CORP put the corp ID here otherwise leave it as 0
+                'allianceID' => 0, // If you'd like to auth based on ALLIANCE put the alliance ID here otherwise leave it as 0 (Can be used in conjunction with corp)
+                'corpMemberRole' => 'WCM', // The name of the role your CORP members will be assigned too if the auth plugin is active.
+                'allyMemberRole' => '', // The name of the role your ALLIANCE members will be assigned too if the auth plugin is active.
+            ),
+            'AG15' => array(
+                'corpID' => 98373666, // If you'd like to auth based on CORP put the corp ID here otherwise leave it as 0
+                'allianceID' => 0, // If you'd like to auth based on ALLIANCE put the alliance ID here otherwise leave it as 0 (Can be used in conjunction with corp)
+                'corpMemberRole' => 'AG15', // The name of the role your CORP members will be assigned too if the auth plugin is active.
+                'allyMemberRole' => '', // The name of the role your ALLIANCE members will be assigned too if the auth plugin is active.
+            ),
+            'BWAM' => array(
+                'corpID' => 98053172, // If you'd like to auth based on CORP put the corp ID here otherwise leave it as 0
                 'allianceID' => 0, // If you'd like to auth based on ALLIANCE put the alliance ID here otherwise leave it as 0 (Can be used in conjunction with corp)
                 'corpMemberRole' => '', // The name of the role your CORP members will be assigned too if the auth plugin is active.
+                'allyMemberRole' => 'BWAM', // The name of the role your ALLIANCE members will be assigned too if the auth plugin is active.
+            ),
+            '.DWA.' => array(
+                'corpID' => 98525869, // If you'd like to auth based on CORP put the corp ID here otherwise leave it as 0
+                'allianceID' => 0, // If you'd like to auth based on ALLIANCE put the alliance ID here otherwise leave it as 0 (Can be used in conjunction with corp)
+                'corpMemberRole' => '.DWA.', // The name of the role your CORP members will be assigned too if the auth plugin is active.
+                'allyMemberRole' => '', // The name of the role your ALLIANCE members will be assigned too if the auth plugin is active.
+            ),
+            'EX LE' => array(
+                'corpID' => 98435713, // If you'd like to auth based on CORP put the corp ID here otherwise leave it as 0
+                'allianceID' => 0, // If you'd like to auth based on ALLIANCE put the alliance ID here otherwise leave it as 0 (Can be used in conjunction with corp)
+                'corpMemberRole' => 'EX LE', // The name of the role your CORP members will be assigned too if the auth plugin is active.
+                'allyMemberRole' => '', // The name of the role your ALLIANCE members will be assigned too if the auth plugin is active.
+            ),
+            'IFRAC' => array(
+                'corpID' => 98410503, // If you'd like to auth based on CORP put the corp ID here otherwise leave it as 0
+                'allianceID' => 0, // If you'd like to auth based on ALLIANCE put the alliance ID here otherwise leave it as 0 (Can be used in conjunction with corp)
+                'corpMemberRole' => 'IFRAC', // The name of the role your CORP members will be assigned too if the auth plugin is active.
+                'allyMemberRole' => '', // The name of the role your ALLIANCE members will be assigned too if the auth plugin is active.
+            ),
+            '-MGS-' => array(
+                'corpID' => 98119988, // If you'd like to auth based on CORP put the corp ID here otherwise leave it as 0
+                'allianceID' => 0, // If you'd like to auth based on ALLIANCE put the alliance ID here otherwise leave it as 0 (Can be used in conjunction with corp)
+                'corpMemberRole' => '-MGS-', // The name of the role your CORP members will be assigned too if the auth plugin is active.
+                'allyMemberRole' => '', // The name of the role your ALLIANCE members will be assigned too if the auth plugin is active.
+            ),
+            'TINIM' => array(
+                'corpID' => 98511081, // If you'd like to auth based on CORP put the corp ID here otherwise leave it as 0
+                'allianceID' => 0, // If you'd like to auth based on ALLIANCE put the alliance ID here otherwise leave it as 0 (Can be used in conjunction with corp)
+                'corpMemberRole' => 'TINIM', // The name of the role your CORP members will be assigned too if the auth plugin is active.
+                'allyMemberRole' => '', // The name of the role your ALLIANCE members will be assigned too if the auth plugin is active.
+            ),
+            'OGLOB' => array(
+                'corpID' => 1641100543, // If you'd like to auth based on CORP put the corp ID here otherwise leave it as 0
+                'allianceID' => 0, // If you'd like to auth based on ALLIANCE put the alliance ID here otherwise leave it as 0 (Can be used in conjunction with corp)
+                'corpMemberRole' => 'OGLOB', // The name of the role your CORP members will be assigned too if the auth plugin is active.
+                'allyMemberRole' => '', // The name of the role your ALLIANCE members will be assigned too if the auth plugin is active.
+            ),
+            'RSE-I' => array(
+                'corpID' => 98478981, // If you'd like to auth based on CORP put the corp ID here otherwise leave it as 0
+                'allianceID' => 0, // If you'd like to auth based on ALLIANCE put the alliance ID here otherwise leave it as 0 (Can be used in conjunction with corp)
+                'corpMemberRole' => 'RSE-I', // The name of the role your CORP members will be assigned too if the auth plugin is active.
+                'allyMemberRole' => '', // The name of the role your ALLIANCE members will be assigned too if the auth plugin is active.
+            ),
+            'BACKT' => array(
+                'corpID' => 98508809, // If you'd like to auth based on CORP put the corp ID here otherwise leave it as 0
+                'allianceID' => 0, // If you'd like to auth based on ALLIANCE put the alliance ID here otherwise leave it as 0 (Can be used in conjunction with corp)
+                'corpMemberRole' => 'BACKT', // The name of the role your CORP members will be assigned too if the auth plugin is active.
+                'allyMemberRole' => '', // The name of the role your ALLIANCE members will be assigned too if the auth plugin is active.
+            ),
+            'SWEVE' => array(
+                'corpID' => 98523386, // If you'd like to auth based on CORP put the corp ID here otherwise leave it as 0
+                'allianceID' => 0, // If you'd like to auth based on ALLIANCE put the alliance ID here otherwise leave it as 0 (Can be used in conjunction with corp)
+                'corpMemberRole' => 'SWEVE', // The name of the role your CORP members will be assigned too if the auth plugin is active.
+                'allyMemberRole' => '', // The name of the role your ALLIANCE members will be assigned too if the auth plugin is active.
+            ),
+            '.9GAG' => array(
+                'corpID' => 98416106, // If you'd like to auth based on CORP put the corp ID here otherwise leave it as 0
+                'allianceID' => 0, // If you'd like to auth based on ALLIANCE put the alliance ID here otherwise leave it as 0 (Can be used in conjunction with corp)
+                'corpMemberRole' => '.9GAG', // The name of the role your CORP members will be assigned too if the auth plugin is active.
+                'allyMemberRole' => '', // The name of the role your ALLIANCE members will be assigned too if the auth plugin is active.
+            ),
+            'JUSTM' => array(
+                'corpID' => 98505105, // If you'd like to auth based on CORP put the corp ID here otherwise leave it as 0
+                'allianceID' => 0, // If you'd like to auth based on ALLIANCE put the alliance ID here otherwise leave it as 0 (Can be used in conjunction with corp)
+                'corpMemberRole' => 'JUSTM', // The name of the role your CORP members will be assigned too if the auth plugin is active.
+                'allyMemberRole' => '', // The name of the role your ALLIANCE members will be assigned too if the auth plugin is active.
+            ),
+            'T.N.S' => array(
+                'corpID' => 98507209, // If you'd like to auth based on CORP put the corp ID here otherwise leave it as 0
+                'allianceID' => 0, // If you'd like to auth based on ALLIANCE put the alliance ID here otherwise leave it as 0 (Can be used in conjunction with corp)
+                'corpMemberRole' => 'T.N.S', // The name of the role your CORP members will be assigned too if the auth plugin is active.
+                'allyMemberRole' => '', // The name of the role your ALLIANCE members will be assigned too if the auth plugin is active.
+            ),
+            'TRPWR' => array(
+                'corpID' => 98524710, // If you'd like to auth based on CORP put the corp ID here otherwise leave it as 0
+                'allianceID' => 0, // If you'd like to auth based on ALLIANCE put the alliance ID here otherwise leave it as 0 (Can be used in conjunction with corp)
+                'corpMemberRole' => 'TRPWR', // The name of the role your CORP members will be assigned too if the auth plugin is active.
+                'allyMemberRole' => '', // The name of the role your ALLIANCE members will be assigned too if the auth plugin is active.
+            ),
+            '260M' => array(
+                'corpID' => 98522929, // If you'd like to auth based on CORP put the corp ID here otherwise leave it as 0
+                'allianceID' => 0, // If you'd like to auth based on ALLIANCE put the alliance ID here otherwise leave it as 0 (Can be used in conjunction with corp)
+                'corpMemberRole' => '260M', // The name of the role your CORP members will be assigned too if the auth plugin is active.
+                'allyMemberRole' => '', // The name of the role your ALLIANCE members will be assigned too if the auth plugin is active.
+            ),
+            'LCPL' => array(
+                'corpID' => 98483509, // If you'd like to auth based on CORP put the corp ID here otherwise leave it as 0
+                'allianceID' => 0, // If you'd like to auth based on ALLIANCE put the alliance ID here otherwise leave it as 0 (Can be used in conjunction with corp)
+                'corpMemberRole' => 'LCPL', // The name of the role your CORP members will be assigned too if the auth plugin is active.
                 'allyMemberRole' => '', // The name of the role your ALLIANCE members will be assigned too if the auth plugin is active.
             )
         ),
@@ -193,15 +295,15 @@ $config['plugins'] = array(
         'groupConfig' => array(
             'alliance' => array(
                 'name' => 'Alliance', // insert a label (these must be unique)
-                'channel' => 360131221810053133, //killmails post to this channel
+                'channel' => 328440638531960833, //killmails post to this channel
                 'corpID' => 0, //corpid for killmails
                 'allianceID' => 99005874, //allianceid for killmails (Leave as 0 if using it for a corp)
                 'lossMails' => 'false', //set as true to post both kills and losses, false to post only kills.
-                'startMail' => 1, //Put the zkill killID of your latest killmail. Otherwise it will pull from the beginning of time.
-                'minimumValue' => 5000000, //Put the minimum isk value for killmails here (Do not put any commas just numbers)
-                'minimumlossValue' => 0, //Put the minimum isk loss value for killmails here (Do not put any commas just numbers)
+                'startMail' => 64806964, //Put the zkill killID of your latest killmail. Otherwise it will pull from the beginning of time.
+                'minimumValue' => 100000000, //Put the minimum isk value for killmails here (Do not put any commas just numbers)
+                'minimumlossValue' => 500000000, //Put the minimum isk loss value for killmails here (Do not put any commas just numbers)
                 'bigKill' => 1000000000, //Set an isk amount you'd like to consider a high value kill, will alert the channel if any kills/losses hit this amount. (Leave as null if you don't want this feature)
-                'bigKillChannel' => 360131221810053133, //what channel does the bot post big kills into (must be set, if ud like to use one channel just put the same u put above here)
+                'bigKillChannel' => 328440638531960833, //what channel does the bot post big kills into (must be set, if ud like to use one channel just put the same u put above here)
             )
         ),
     ),
