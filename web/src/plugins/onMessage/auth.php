@@ -118,6 +118,7 @@ class auth
                 //If corp is new store in DB
                 $corpInfo = getCorpInfo($corpID);
                 if (null === $corpInfo) {
+                    $this->logger->addInfo("Unknown corp in cache, querying ESI");
                     $corpDetails = corpDetails($corpID);
                     if (null === $corpDetails) { // Make sure it's always set.
                         $this->message->reply('**Failure:** Unable to auth at this time, ESI is down. Please try again later.');
@@ -131,6 +132,7 @@ class auth
                 } else {
                     $corpTicker = $corpInfo['corpTicker'];
                 }
+                $this->logger->addInfo("Corp Ticker ".$corpTicker);
 
                 //Add corp ticker to name
                 if ($this->corpTickers == 'true') {
@@ -143,8 +145,9 @@ class auth
                 }
                 $role = null;
 
-                $roles = @$guild->roles;
-                $member = @$guild->members->get('id', $userID);
+                $roles = $member = null;
+                try { $roles = @$guild->roles; } catch(Exception $e) {}
+                try { $member = @$guild->members->get('id', $userID); } catch(Exception $e) {}
                 if (null === $member) {
                     $this->message->reply("**Failure:** You're not a member of the correct guild.");
                     return null;
@@ -193,6 +196,9 @@ class auth
                         }
                     }
                 }
+                
+                $this->message->reply("Role = ".$role);
+                
                 //check for standings based roles
                 if ($this->standingsBased === 'true' && $role === null) {
                     $allianceContacts = getContacts($allianceID);
