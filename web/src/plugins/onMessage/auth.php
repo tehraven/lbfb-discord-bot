@@ -258,7 +258,7 @@ class auth
             return null;
         }
         
-        $this->logger->addInfo("No trigger data! ".print_r($data, true));
+        $this->logger->addInfo("No trigger data! ".print_r($data, true)." from ".print_r($msgData, true));
         
         return null;
     }

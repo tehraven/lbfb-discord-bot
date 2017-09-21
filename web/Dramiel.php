@@ -36,7 +36,7 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
 // More memory allowance
-ini_set('memory_limit', '1024M');
+ini_set('memory_limit', '300M');
 
 // Just in case we get launched from somewhere else
 chdir(__DIR__);
@@ -49,7 +49,7 @@ $startTime = time();
 
 // create a log channel
 $logger = new Logger('Dramiel');
-$logger->pushHandler(new StreamHandler(__DIR__ . '/log/dramielLog.log', Logger::INFO));
+$logger->pushHandler(new StreamHandler(__DIR__ . '/log/dramielLog.log', Logger::DEBUG));
 $logger->addInfo('Logger Initiated');
 
 GLOBAL $logger;

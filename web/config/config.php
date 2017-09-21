@@ -154,9 +154,9 @@ $config['plugins'] = array(
     'auth' => array(
         'url' => 'https://discord.fuelblocks.space/', // put a url here if using sso auth for ur sso page.
         'exempt' => [], // role names that are exempt from auth checks (wont be removed by the bot)
-        'alertChannel' => 360126231070375936, // if using periodic check put the channel you'd like the bot to log removing users in. (Recommended you don't use an active chat channel)
+        'alertChannel' => 0, // if using periodic check put the channel you'd like the bot to log removing users in. (Recommended you don't use an active chat channel)
         'corpTickers' => 'true', // if "true" bot will automatically add corp tickers to the front of users names at auth.
-        'nameEnforce' => true, // if "true" bot will automatically rename users to match their ingame name, can be used in conjunction with corpTickers.
+        'nameEnforce' => 'true', // if "true" bot will automatically rename users to match their ingame name, can be used in conjunction with corpTickers.
         'authGroups' => array(
             'group1' => array(
                 'corpID' => 0, // If you'd like to auth based on CORP put the corp ID here otherwise leave it as 0
@@ -189,7 +189,7 @@ $config['plugins'] = array(
             'bigKillStartID' => 57000000, //Recommend you set this to a recent killID to prevent it spamming from the beginning of time
         ),
         'groupConfig' => array(
-            'group1' => array(
+            'alliance' => array(
                 'name' => 'Alliance', // insert a label (these must be unique)
                 'channel' => 360131221810053133, //killmails post to this channel
                 'corpID' => 0, //corpid for killmails
@@ -200,19 +200,7 @@ $config['plugins'] = array(
                 'minimumlossValue' => 0, //Put the minimum isk loss value for killmails here (Do not put any commas just numbers)
                 'bigKill' => 1000000000, //Set an isk amount you'd like to consider a high value kill, will alert the channel if any kills/losses hit this amount. (Leave as null if you don't want this feature)
                 'bigKillChannel' => 360131221810053133, //what channel does the bot post big kills into (must be set, if ud like to use one channel just put the same u put above here)
-            ),
-            'group2' => array(
-                'name' => 'corp2', // insert a label (these must be unique)
-                'channel' => 0, //killmails post to this channel
-                'corpID' => 0, //corpid for killmails
-                'allianceID' => 0, //allianceid for killmails (Leave as 0 if using it for a corp)
-                'lossMails' => 'true', //set as true to post both kills and losses, false to post only kills.
-                'startMail' => 1, //Put the zkill killID of your latest killmail. Otherwise it will pull from the beginning of time.
-                'minimumValue' => 0, //Put the minimum isk value for killmails here (Do not put any commas just numbers)
-                'minimumlossValue' => 0, //Put the minimum isk loss value for killmails here (Do not put any commas just numbers)
-                'bigKill' => null, //Set an isk amount you'd like to consider a high value kill, will alert the channel if any kills/losses hit this amount. (Leave as null if you don't want this feature)
-                'bigKillChannel' => 0, //what channel does the bot post big kills into (must be set, if ud like to use one channel just put the same u put above here)
-            ),
+            )
         ),
     ),
     //Siphon detection works by looking for multiples of 100 inside standard silos. https://github.com/shibdib/Dramiel/wiki/1b.-Siphon-Detection for more info
