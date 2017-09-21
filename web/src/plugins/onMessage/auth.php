@@ -81,7 +81,7 @@ class auth
         
 
         if (in_array($channelID, $this->excludeChannel, true)) {
-            $logger->this->logger("Received from channel " . $channelID . ", which is disabled.");
+            $this->logger->addInfo("Received from channel " . $channelID . ", which is disabled.");
             return null;
         }
 

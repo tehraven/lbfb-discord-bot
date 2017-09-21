@@ -91,6 +91,7 @@ foreach ($pluginDirs as $dir) {
     foreach (glob($dir) as $plugin) {
         // Only load the plugins we want to load, according to the config
         if (!in_array(str_replace('.php', '', basename($plugin)), $config['enabledPlugins'])) {
+            $logger->info('Skipping '.$plugin.' plugin');
             continue;
         }
 
@@ -100,6 +101,7 @@ foreach ($pluginDirs as $dir) {
         $p = new $fileName();
         $p->init($config, $discord, $logger);
         $pluginsT[] = $p;
+        $logger->info('Added '.$plugin.' plugin');
     }
 }
 // Number of plugins loaded
