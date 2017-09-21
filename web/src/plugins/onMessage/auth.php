@@ -77,8 +77,7 @@ class auth
      */
     public function onMessage($msgData, $message)
     {
-        $channelID = (int) $msgData['message']['channelID'];
-        
+        $channelID = (int) $msgData['message']['channelID'];        
 
         if (in_array($channelID, $this->excludeChannel, true)) {
             $this->logger->addInfo("Received from channel " . $channelID . ", which is disabled.");
@@ -101,14 +100,17 @@ class auth
             }
 
             $code = $data['messageString'];
-            $result = selectPending($this->db, $this->dbUser, $this->dbPass, $this->dbName, $code);
 
             if (strlen($code) < 12) {
                 $this->message->reply('Invalid Code, check ' . $this->config['bot']['trigger'] . 'help auth for more info.');
                 return null;
             }
+            
+            $result = selectPending($this->db, $this->dbUser, $this->dbPass, $this->dbName, $code);
 
+            $this->logger->addInfo("Searching for auth code '" . $code. "...");
             while ($rows = $result->fetch_assoc()) {
+                $this->logger->addInfo("Found: ".print_r($rows, true));
                 $charID = (int) $rows['characterID'];
                 $corpID = (int) $rows['corporationID'];
                 $allianceID = (int) $rows['allianceID'];
