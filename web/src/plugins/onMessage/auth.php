@@ -157,6 +157,10 @@ class auth
                     $this->message->reply('**Failure:** Unable to auth at this time, ESI is down. Please try again later.');
                     return null;
                 }
+                
+                
+                $this->logger->addInfo("Possible roles: " . implode(", ", $roles));
+                
                 foreach ($this->authGroups as $authGroup) {
                     //Check if it's set to match corp and alliance
                     if ($authGroup['corpID'] !== 0 && $authGroup['allianceID'] !== 0) {
@@ -197,7 +201,7 @@ class auth
                     }
                 }
                 
-                $this->message->reply("Role = ".$role);
+                $this->logger->addInfo("Role = ".$role);
                 
                 //check for standings based roles
                 if ($this->standingsBased === 'true' && $role === null) {
@@ -266,7 +270,7 @@ class auth
             return null;
         }
         
-        $this->logger->addInfo("No trigger data! ".print_r($data, true)." from ".print_r($msgData, true));
+        //$this->logger->addInfo("No trigger data! ".print_r($data, true)." from ".print_r($msgData, true));
         
         return null;
     }
