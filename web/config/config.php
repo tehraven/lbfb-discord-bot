@@ -74,7 +74,7 @@ $config['eve'] = array(
 $config['enabledPlugins'] = array( // remove the slashes for the plugins you want
     'about', //info on the bot
     'auth', //sso based auth system
-   'authCheck', // checks if users have left corp or alliance
+    'authCheck', // checks if users have left corp or alliance
     'charInfo', // eve character info using eve-kill
     'sysInfo', // eve system information
     'corpInfo', // eve corp info
@@ -162,7 +162,7 @@ $config['plugins'] = array(
                 'corpID' => 0, // If you'd like to auth based on CORP put the corp ID here otherwise leave it as 0
                 'allianceID' => 99005874, // If you'd like to auth based on ALLIANCE put the alliance ID here otherwise leave it as 0 (Can be used in conjunction with corp)
                 'corpMemberRole' => '', // The name of the role your CORP members will be assigned too if the auth plugin is active.
-                'allyMemberRole' => 'Memefleet', // The name of the role your ALLIANCE members will be assigned too if the auth plugin is active.
+                'allyMemberRole' => '<@&360256178179014657>', // The name of the role your ALLIANCE members will be assigned too if the auth plugin is active.
             ),
             'group2' => array(
                 'corpID' => 0, // If you'd like to auth based on CORP put the corp ID here otherwise leave it as 0
