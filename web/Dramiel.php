@@ -117,6 +117,7 @@ if ($config['bot']['silentMode'] == 'false' || !isset($config['bot']['silentMode
         foreach (glob($dir) as $plugin) {
             // Only load the plugins we want to load, according to the config
             if (!in_array(str_replace('.php', '', basename($plugin)), $config['enabledPlugins']) && !in_array(str_replace('.php', '', basename($plugin)), $adminPlugins)) {
+                $logger->info('Skipping '.$plugin.' plugin');
                 continue;
             }
 
@@ -126,6 +127,7 @@ if ($config['bot']['silentMode'] == 'false' || !isset($config['bot']['silentMode
             $p = new $fileName();
             $p->init($config, $discord, $logger);
             $plugins[] = $p;
+            $logger->info('Added '.$plugin.' plugin');
         }
     }
 
