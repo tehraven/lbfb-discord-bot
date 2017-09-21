@@ -106,10 +106,10 @@ class auth
                 return null;
             }
             
+            $this->message->reply("One Moment...");
+            
             $result = selectPending($this->db, $this->dbUser, $this->dbPass, $this->dbName, $code);
 
-            $this->logger->addInfo("Searching for auth code '" . $code. "...");
-            $this->message->reply("One Moment...");
             while ($rows = $result->fetch_assoc()) {
                 $this->logger->addInfo("Found: ".print_r($rows, true));
                 $charID = (int) $rows['characterID'];
@@ -147,13 +147,8 @@ class auth
                 $role = null;
 
                 $roles = $member = null;
-                
-                $this->logger->addInfo("Getting roles and members...");
-                
-                $roles = $guild->roles;
-                $member = $guild->members->get('id', $userID);
-                
-                $this->logger->addInfo("Done getting roles and members");
+                try { $roles = $guild->roles; } catch (\Exception $e) {}
+                try { $member = $guild->members->get('id', $userID); } catch (\Exception $e) {}
                 
                 if (null === $member) {
                     $this->message->reply("**Failure:** You're not a member of the correct guild.");
