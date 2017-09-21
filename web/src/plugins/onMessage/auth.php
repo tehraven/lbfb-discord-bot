@@ -80,7 +80,7 @@ class auth
         $channelID = (int) $msgData['message']['channelID'];        
 
         if (in_array($channelID, $this->excludeChannel, true)) {
-            $this->logger->addInfo("Received from channel " . $channelID . ", which is disabled.");
+            //$this->logger->addInfo("Received from channel " . $channelID . ", which is disabled.");
             return null;
         }
 
@@ -111,7 +111,7 @@ class auth
             $result = selectPending($this->db, $this->dbUser, $this->dbPass, $this->dbName, $code);
 
             while ($rows = $result->fetch_assoc()) {
-                $this->logger->addInfo("Found: ".print_r($rows, true));
+                //$this->logger->addInfo("Found: ".print_r($rows, true));
                 $charID = (int) $rows['characterID'];
                 $corpID = (int) $rows['corporationID'];
                 $allianceID = (int) $rows['allianceID'];
@@ -119,7 +119,7 @@ class auth
                 //If corp is new store in DB
                 $corpInfo = getCorpInfo($corpID);
                 if (null === $corpInfo) {
-                    $this->logger->addInfo("Unknown corp in cache, querying ESI");
+                    //$this->logger->addInfo("Unknown corp in cache, querying ESI");
                     $corpDetails = corpDetails($corpID);
                     if (null === $corpDetails) { // Make sure it's always set.
                         $this->message->reply('**Failure:** Unable to auth at this time, ESI is down. Please try again later.');
@@ -133,15 +133,15 @@ class auth
                 } else {
                     $corpTicker = $corpInfo['corpTicker'];
                 }
-                $this->logger->addInfo("Corp Ticker ".$corpTicker);
+                //$this->logger->addInfo("Corp Ticker ".$corpTicker);
 
                 //Add corp ticker to name
-                if ($this->corpTickers == 'true') {
+                if ($this->corpTickers === 'true') {
                     $setTicker = 1;
                 }
 
                 //Set eve name if nameCheck is true
-                if ($this->nameEnforce == 'true') {
+                if ($this->nameEnforce === 'true') {
                     $nameEnforce = 1;
                 }
                 $role = null;
@@ -160,30 +160,27 @@ class auth
                     return null;
                 }
                 
-                
-                $this->logger->addInfo("Role = ".$role);
-                
                 foreach ($this->authGroups as $authGroup) {
                     //Check if it's set to match corp and alliance
-                    if ($authGroup['corpID'] !== 0 && $authGroup['allianceID'] !== 0) {
+                    if ($authGroup['corpID'] != 0 && $authGroup['allianceID'] != 0) {
                         //Check if corpID matches
-                        if ($corpID === $authGroup['corpID'] && $allianceID === $authGroup['allianceID']) {
+                        if ($corpID == $authGroup['corpID'] && $allianceID == $authGroup['allianceID']) {
                             foreach ($roles as $role) {
-                                if ((string) $role->name === (string) $authGroup['corpMemberRole']) {
+                                if ((string) $role->name == (string) $authGroup['corpMemberRole']) {
                                     $member->addRole($role);
                                 }
-                                if ((string) $role->name === (string) $authGroup['allyMemberRole']) {
+                                if ((string) $role->name == (string) $authGroup['allyMemberRole']) {
                                     $member->addRole($role);
                                     $role = 'corp/ally';
                                 }
                             }
                             break;
                         }
-                    } elseif ($authGroup['corpID'] !== 0 || $authGroup['allianceID'] !== 0) {
+                    } elseif ($authGroup['corpID'] != 0 || $authGroup['allianceID'] != 0) {
                         //Check if corpID matches
-                        if ($corpID === $authGroup['corpID']) {
+                        if ($corpID == $authGroup['corpID']) {
                             foreach ($roles as $role) {
-                                if ((string) $role->name === (string) $authGroup['corpMemberRole']) {
+                                if ((string) $role->name == (string) $authGroup['corpMemberRole']) {
                                     $member->addRole($role);
                                     $role = 'corp';
                                 }
@@ -191,9 +188,9 @@ class auth
                             break;
                         }
                         //Check if allianceID matches
-                        if ($allianceID === $authGroup['allianceID'] && $authGroup['allianceID'] !== 0) {
+                        if ($allianceID == $authGroup['allianceID'] && $authGroup['allianceID'] != 0) {
                             foreach ($roles as $role) {
-                                if ((string) $role->name === (string) $authGroup['allyMemberRole']) {
+                                if ((string) $role->name == (string) $authGroup['allyMemberRole']) {
                                     $member->addRole($role);
                                     $role = 'ally';
                                 }
@@ -202,8 +199,6 @@ class auth
                         }
                     }
                 }
-                
-                $this->logger->addInfo("Role = ".$role);
                 
                 //check for standings based roles
                 if ($this->standingsBased === 'true' && $role === null) {
@@ -245,9 +240,8 @@ class auth
                     $guild->members->save($member);
                     insertUser($this->db, $this->dbUser, $this->dbPass, $this->dbName, $userID, $charID, $eveName, $role);
                     disableReg($this->db, $this->dbUser, $this->dbPass, $this->dbName, $code);
-                    $msg = ":white_check_mark: **Success:** {$eveName} has been successfully authed.";
                     $this->logger->addInfo("auth: {$eveName} authed");
-                    $this->message->reply($msg);
+                    $nick = $eveName;
                     //Add ticker if set and change name if nameEnforce is on
                     if (isset($setTicker) || isset($nameEnforce)) {
                         if (isset($setTicker) && isset($nameEnforce)) {
@@ -258,6 +252,7 @@ class auth
                             $nick = "[{$corpTicker}] {$userName}";
                         }
                     }
+                    $this->message->reply(":white_check_mark: **Success:** {$nick} has been successfully authed.");
                     if (null !== $nick) {
                         queueRename($userID, $nick, $this->guild);
                     }
