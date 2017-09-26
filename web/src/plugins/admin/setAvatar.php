@@ -72,27 +72,26 @@ class setAvatar
             foreach ($roles as $role) {
                 if (in_array(strtolower($role->name), $adminRoles, true)) {
                     $avatarURL = strtolower((string)$data['messageString']);
-                    $ch = curl_init($avatarURL);
                     if (substr($avatarURL, -4) === '.jpg') {
-                        $fp = fopen('/tmp/avatar.jpg', 'wb');
-                        $dir = '/tmp/avatar.jpg';
+                        $fp = fopen(__DIR__ . '/tmp/avatar.jpg', 'wb');
+                        $dir = __DIR__ . '/tmp/avatar.jpg';
                     } elseif (substr($avatarURL, -4) === '.png') {
-                        $fp = fopen('/tmp/avatar.png', 'wb');
-                        $dir = '/tmp/avatar.png';
+                        $fp = fopen(__DIR__ . '/tmp/avatar.png', 'wb');
+                        $dir = __DIR__ . '/tmp/avatar.png';
                     } else {
                         return $this->message->reply('Invalid URL. Make sure the URL links directly to a JPG or PNG.');
                     }
-                    curl_setopt($ch, CURLOPT_FILE, $fp);
-                    curl_setopt($ch, CURLOPT_HEADER, 0);
-                    curl_exec($ch);
-                    curl_close($ch);
-                    fclose($fp);
-                    $this->discord->setAvatar($dir);
-                    $this->discord->save();
-
-                    $msg = 'New avatar set';
-                    $this->logger->addInfo("setGame: Bot avatar changed to {$avatarURL} by {$msgData['message']['from']}");
-                    $this->message->reply($msg);
+                    @unlink($avatarURL);
+                    if(file_put_contents($dir, file_get_contents($avatarURL))) {
+                        $this->discord->setAvatar($dir);
+                        $this->discord->save();
+                        $msg = 'New avatar set';
+                        $this->logger->addInfo("setGame: Bot avatar changed to {$avatarURL} by {$msgData['message']['from']}");
+                        $this->message->reply($msg);
+                    }
+                    else {
+                        return $this->message->reply('Unable to save this photo.');
+                    }
                     return null;
                 }
             }
