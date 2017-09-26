@@ -72,26 +72,34 @@ class setAvatar
             foreach ($roles as $role) {
                 if (in_array(strtolower($role->name), $adminRoles, true)) {
                     $avatarURL = strtolower((string)$data['messageString']);
+                    $ch = curl_init($avatarURL);
+                    $base = __DIR__ . "/../../../";
                     if (substr($avatarURL, -4) === '.jpg') {
-                        $fp = fopen(__DIR__ . '/tmp/avatar.jpg', 'wb');
-                        $dir = __DIR__ . '/tmp/avatar.jpg';
+                        $fp = fopen($base.'tmp/avatar.jpg', 'wb');
+                        $dir = $base.'tmp/avatar.jpg';
                     } elseif (substr($avatarURL, -4) === '.png') {
-                        $fp = fopen(__DIR__ . '/tmp/avatar.png', 'wb');
-                        $dir = __DIR__ . '/tmp/avatar.png';
+                        $fp = fopen($base.'tmp/avatar.png', 'wb');
+                        $dir = $base.'tmp/avatar.png';
                     } else {
                         return $this->message->reply('Invalid URL. Make sure the URL links directly to a JPG or PNG.');
                     }
-                    @unlink($avatarURL);
-                    if(file_put_contents($dir, file_get_contents($avatarURL))) {
+                    @unlink($dir);
+                    $ch = curl_init($avatarURL);
+                    curl_setopt($ch, CURLOPT_FILE, $fp);
+                    curl_setopt($ch, CURLOPT_HEADER, 0);
+                    curl_exec($ch);
+                    if(curl_exec($ch) === false)
+                        $this->message->reply('Unable to save this photo. ['.print_r(curl_error($ch), true).']');
+                    else {
                         $this->discord->setAvatar($dir);
                         $this->discord->save();
                         $msg = 'New avatar set';
                         $this->logger->addInfo("setGame: Bot avatar changed to {$avatarURL} by {$msgData['message']['from']}");
                         $this->message->reply($msg);
                     }
-                    else {
-                        return $this->message->reply('Unable to save this photo.');
-                    }
+                    
+                    curl_close($ch);
+                    fclose($fp);
                     return null;
                 }
             }
