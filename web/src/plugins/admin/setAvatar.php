@@ -25,6 +25,51 @@
 
 use Discord\Parts\User\Client;
 
+# setup a global file pointer
+$GlobalFileHandle = null;
+
+function saveRemoteFile($url, $filename) {
+  global $GlobalFileHandle;
+
+  set_time_limit(0);
+
+  # Open the file for writing...
+  $GlobalFileHandle = fopen($filename, 'w+');
+
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_FILE, $GlobalFileHandle);
+  curl_setopt($ch, CURLOPT_HEADER, 0);
+  curl_setopt($ch, CURLOPT_USERAGENT, "MY+USER+AGENT"); //Make this valid if possible
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); # optional
+  curl_setopt($ch, CURLOPT_TIMEOUT, -1); # optional: -1 = unlimited, 3600 = 1 hour
+  curl_setopt($ch, CURLOPT_VERBOSE, false); # Set to true to see all the innards
+
+  # Only if you need to bypass SSL certificate validation
+  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+  # Assign a callback function to the CURL Write-Function
+  curl_setopt($ch, CURLOPT_WRITEFUNCTION, 'curlWriteFile');
+
+  # Exceute the download - note we DO NOT put the result into a variable!
+  curl_exec($ch);
+
+  # Close CURL
+  curl_close($ch);
+
+  # Close the file pointer
+  fclose($GlobalFileHandle);
+}
+
+function curlWriteFile($cp, $data) {
+  global $GlobalFileHandle;
+  $len = fwrite($GlobalFileHandle, $data);
+  return $len;
+}
+
 /**
  * @property  message
  */
@@ -72,23 +117,15 @@ class setAvatar
             foreach ($roles as $role) {
                 if (in_array(strtolower($role->name), $adminRoles, true)) {
                     $avatarURL = strtolower((string)$data['messageString']);
-                    $ch = curl_init($avatarURL);
                     $base = __DIR__ . "/../../../";
                     if (substr($avatarURL, -4) === '.jpg') {
-                        $fp = fopen($base.'tmp/avatar.jpg', 'wb');
                         $dir = $base.'tmp/avatar.jpg';
                     } elseif (substr($avatarURL, -4) === '.png') {
-                        $fp = fopen($base.'tmp/avatar.png', 'wb');
                         $dir = $base.'tmp/avatar.png';
                     } else {
                         return $this->message->reply('Invalid URL. Make sure the URL links directly to a JPG or PNG.');
                     }
-                    @unlink($dir);
-                    $ch = curl_init($avatarURL);
-                    curl_setopt($ch, CURLOPT_FILE, $fp);
-                    curl_setopt($ch, CURLOPT_HEADER, 0);
-                    curl_exec($ch);
-                    if(curl_exec($ch) === false)
+                    if(saveRemoteFile($avatarURL, $dir) == false)
                         $this->message->reply('Unable to save this photo. ['.print_r(curl_error($ch), true).']');
                     else {
                         $this->discord->setAvatar($dir);
