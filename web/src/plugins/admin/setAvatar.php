@@ -117,16 +117,16 @@ class setAvatar
             foreach ($roles as $role) {
                 if (in_array(strtolower($role->name), $adminRoles, true)) {
                     $avatarURL = strtolower((string)$data['messageString']);
-                    $base = __DIR__ . "/../../../";
                     if (substr($avatarURL, -4) === '.jpg') {
-                        $dir = $base.'tmp/avatar.jpg';
+                        $dir = '/var/www/tmp/avatar.jpg';
                     } elseif (substr($avatarURL, -4) === '.png') {
-                        $dir = $base.'tmp/avatar.png';
+                        $dir = '/var/www/tmp/avatar.png';
                     } else {
                         return $this->message->reply('Invalid URL. Make sure the URL links directly to a JPG or PNG.');
                     }
-                    if(saveRemoteFile($avatarURL, $dir) == false)
-                        $this->message->reply('Unable to save this photo. ['.print_r(curl_error($ch), true).']');
+                    $ret = saveRemoteFile($avatarURL, $dir);
+                    if(filesize($dir) == 0)
+                        $this->message->reply('Unable to save this photo. ['.gettype($ret).' => '.print_r($ret, true).']');
                     else {
                         $this->discord->setAvatar($dir);
                         $this->discord->save();
